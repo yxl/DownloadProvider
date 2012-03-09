@@ -1,7 +1,10 @@
 package com.mozillaonline.downloadprovider;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,6 +23,8 @@ public class DownloadProviderActivity extends Activity implements
     @SuppressWarnings("unused")
     private static final String TAG = DownloadProviderActivity.class.getName();
 
+    private BroadcastReceiver mReceiver;    
+
     EditText mUrlInputEditText;
     Button mStartDownloadButton;
     DownloadManager mDownloadManager;
@@ -33,9 +38,24 @@ public class DownloadProviderActivity extends Activity implements
 
 	mDownloadManager = new DownloadManager(getContentResolver(),
 		getPackageName());
-
 	buildComponents();
 	startDownloadService();
+	
+	mReceiver = new BroadcastReceiver() {
+	    
+	    @Override
+	    public void onReceive(Context context, Intent intent) {
+		showDownloadList();
+	    }
+	};
+	
+	registerReceiver(mReceiver, new IntentFilter(DownloadManager.ACTION_NOTIFICATION_CLICKED));
+    }
+    
+    @Override
+    protected void onDestroy() {
+	unregisterReceiver(mReceiver);
+	super.onDestroy();
     }
 
     private void buildComponents() {
@@ -47,7 +67,7 @@ public class DownloadProviderActivity extends Activity implements
 	mShowDownloadListButton.setOnClickListener(this);
 
 	mUrlInputEditText
-		.setText("http://yxl.github.com/Fire-IE/fireie-latest.xpi");
+		.setText("http://down.mumayi.com/41052/mbaidu");
     }
 
     private void startDownloadService() {
@@ -81,9 +101,9 @@ public class DownloadProviderActivity extends Activity implements
 	String url = mUrlInputEditText.getText().toString();
 	Uri srcUri = Uri.parse(url);
 	DownloadManager.Request request = new Request(srcUri);
-	for (int i=0; i<2; i++) {
-	    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "/");
-	    mDownloadManager.enqueue(request);
-	}
+	request.setDestinationInExternalPublicDir(
+		Environment.DIRECTORY_DOWNLOADS, "/");
+	request.setDescription("Just for test");
+	mDownloadManager.enqueue(request);
     }
 }

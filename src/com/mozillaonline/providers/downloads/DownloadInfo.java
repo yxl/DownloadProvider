@@ -461,6 +461,7 @@ public class DownloadInfo {
             ContentValues values = new ContentValues();
             values.put(Downloads.COLUMN_STATUS, mStatus);
             mContext.getContentResolver().update(getAllDownloadsUri(), values, null, null);
+            return;
         }
         DownloadThread downloader = new DownloadThread(mContext, mSystemFacade, this);
         mHasActiveThread = true;

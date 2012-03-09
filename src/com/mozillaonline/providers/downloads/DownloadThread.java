@@ -115,6 +115,8 @@ public class DownloadThread extends Thread {
      * filename.
      */
     private class StopRequest extends Throwable {
+	private static final long serialVersionUID = 1L;
+
 	public int mFinalStatus;
 
 	public StopRequest(int finalStatus, String message) {

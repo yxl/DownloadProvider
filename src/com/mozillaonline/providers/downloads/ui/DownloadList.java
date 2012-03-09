@@ -25,7 +25,6 @@ import java.util.Set;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
-import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
@@ -54,7 +53,6 @@ import android.widget.Toast;
 
 import com.mozillaonline.downloadprovider.R;
 import com.mozillaonline.providers.DownloadManager;
-import com.mozillaonline.providers.downloads.Downloads;
 import com.mozillaonline.providers.downloads.ui.DownloadItem.DownloadSelectListener;
 
 /**
@@ -144,8 +142,8 @@ public class DownloadList extends Activity implements OnChildClickListener,
 		    .getColumnIndexOrThrow(DownloadManager.COLUMN_ID);
 	    mLocalUriColumnId = mDateSortedCursor
 		    .getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_URI);
-            mMediaTypeColumnId =
-                    mDateSortedCursor.getColumnIndexOrThrow(DownloadManager.COLUMN_MEDIA_TYPE);	    
+	    mMediaTypeColumnId = mDateSortedCursor
+		    .getColumnIndexOrThrow(DownloadManager.COLUMN_MEDIA_TYPE);
 	    mReasonColumndId = mDateSortedCursor
 		    .getColumnIndexOrThrow(DownloadManager.COLUMN_REASON);
 
@@ -324,6 +322,34 @@ public class DownloadList extends Activity implements OnChildClickListener,
     }
 
     /**
+     * @return an OnClickListener to pause the given downloadId from the
+     *         Download Manager
+     */
+    private DialogInterface.OnClickListener getPauseClickHandler(
+	    final long downloadId) {
+	return new DialogInterface.OnClickListener() {
+	    @Override
+	    public void onClick(DialogInterface dialog, int which) {
+		mDownloadManager.pauseDownload(downloadId);
+	    }
+	};
+    }
+
+    /**
+     * @return an OnClickListener to resume the given downloadId from the
+     *         Download Manager
+     */
+    private DialogInterface.OnClickListener getResumeClickHandler(
+	    final long downloadId) {
+	return new DialogInterface.OnClickListener() {
+	    @Override
+	    public void onClick(DialogInterface dialog, int which) {
+		mDownloadManager.resumeDownload(downloadId);
+	    }
+	};
+    }
+
+    /**
      * @return an OnClickListener to restart the given downloadId in the
      *         Download Manager
      */
@@ -373,7 +399,7 @@ public class DownloadList extends Activity implements OnChildClickListener,
 	switch (cursor.getInt(mStatusColumnId)) {
 	case DownloadManager.STATUS_PENDING:
 	case DownloadManager.STATUS_RUNNING:
-	    sendRunningDownloadClickedBroadcast(id);
+	    showRunningDialog(id);
 	    break;
 
 	case DownloadManager.STATUS_PAUSED:
@@ -387,7 +413,7 @@ public class DownloadList extends Activity implements OnChildClickListener,
 				getDeleteClickHandler(id))
 			.setOnCancelListener(this).show();
 	    } else {
-		sendRunningDownloadClickedBroadcast(id);
+		showPausedDialog(id);
 	    }
 	    break;
 
@@ -454,6 +480,26 @@ public class DownloadList extends Activity implements OnChildClickListener,
 	return getString(R.string.dialog_failed_body);
     }
 
+    private void showRunningDialog(long downloadId) {
+	new AlertDialog.Builder(this)
+		.setTitle(R.string.download_running)
+		.setMessage(R.string.dialog_running_body)
+		.setNegativeButton(R.string.cancel_running_download,
+			getDeleteClickHandler(downloadId))
+		.setPositiveButton(R.string.pause_download,
+			getPauseClickHandler(downloadId)).show();
+    }
+
+    private void showPausedDialog(long downloadId) {
+	new AlertDialog.Builder(this)
+		.setTitle(R.string.download_queued)
+		.setMessage(R.string.dialog_paused_body)
+		.setNegativeButton(R.string.delete_download,
+			getDeleteClickHandler(downloadId))
+		.setPositiveButton(R.string.resume_download,
+			getResumeClickHandler(downloadId)).show();
+    }
+
     private void showFailedDialog(long downloadId, String dialogBody) {
 	new AlertDialog.Builder(this)
 		.setTitle(R.string.dialog_title_not_available)
@@ -462,19 +508,6 @@ public class DownloadList extends Activity implements OnChildClickListener,
 			getDeleteClickHandler(downloadId))
 		.setPositiveButton(R.string.retry_download,
 			getRestartClickHandler(downloadId)).show();
-    }
-
-    /**
-     * TODO use constants/shared code?
-     */
-    private void sendRunningDownloadClickedBroadcast(long id) {
-	Intent intent = new Intent("android.intent.action.DOWNLOAD_LIST");
-	intent.setClassName(getPackageName(),
-		"com.mozillaonline.providers.downloads.DownloadReceiver");
-	intent.setData(ContentUris.withAppendedId(
-		Downloads.ALL_DOWNLOADS_CONTENT_URI, id));
-	intent.putExtra("multiple", false);
-	sendBroadcast(intent);
     }
 
     // handle a click from the date-sorted list

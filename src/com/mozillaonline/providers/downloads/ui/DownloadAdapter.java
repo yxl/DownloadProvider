@@ -113,7 +113,7 @@ public class DownloadAdapter extends CursorAdapter {
 	    title = mResources.getString(R.string.missing_title);
 	}
 	setTextForView(convertView, R.id.download_title, title);
-	setTextForView(convertView, R.id.domain,
+	setTextForView(convertView, R.id.desc,
 		mCursor.getString(mDescriptionColumnId));
 	setTextForView(convertView, R.id.size_text, getSizeText());
 	setTextForView(convertView, R.id.status_text,
@@ -169,7 +169,7 @@ public class DownloadAdapter extends CursorAdapter {
 	    if (mCursor.getInt(mReasonColumnId) == DownloadManager.PAUSED_QUEUED_FOR_WIFI) {
 		return R.string.download_queued;
 	    } else {
-		return R.string.download_running;
+		return R.string.download_paused;
 	    }
 	}
 	throw new IllegalStateException("Unknown status: "

@@ -361,7 +361,8 @@ public class DownloadManager {
 	 * to a path on external storage, and the calling application must have
 	 * the WRITE_EXTERNAL_STORAGE permission.
 	 * 
-	 * If the URI is a directory(ending with "/"), destination filename will be generated.
+	 * If the URI is a directory(ending with "/"), destination filename will
+	 * be generated.
 	 * 
 	 * @return this object
 	 */
@@ -383,7 +384,8 @@ public class DownloadManager {
 	 *            {@link Context#getExternalFilesDir(String)}
 	 * @param subPath
 	 *            the path within the external directory. If subPath is a
-	 *            directory(ending with "/"), destination filename will be generated.
+	 *            directory(ending with "/"), destination filename will be
+	 *            generated.
 	 * @return this object
 	 */
 	public Request setDestinationInExternalFilesDir(Context context,
@@ -403,7 +405,8 @@ public class DownloadManager {
 	 *            {@link Environment#getExternalStoragePublicDirectory(String)}
 	 * @param subPath
 	 *            the path within the external directory. If subPath is a
-	 *            directory(ending with "/"), destination filename will be generated.
+	 *            directory(ending with "/"), destination filename will be
+	 *            generated.
 	 * @return this object
 	 */
 	public Request setDestinationInExternalPublicDir(String dirType,
@@ -893,6 +896,73 @@ public class DownloadManager {
 	    throws FileNotFoundException {
 	return mResolver.openFileDescriptor(getDownloadUri(id), "r");
     }
+
+    /**
+     * Pause the given downloads, which must be running. This method will only
+     * work when called from within the download manager's process.
+     * 
+     * @param ids
+     *            the IDs of the downloads
+     * @hide
+     */
+    public void pauseDownload(long... ids) {
+	Cursor cursor = query(new Query().setFilterById(ids));
+	try {
+	    for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor
+		    .moveToNext()) {
+		int status = cursor
+			.getInt(cursor.getColumnIndex(COLUMN_STATUS));
+		if (status != STATUS_RUNNING && status != STATUS_PENDING ) {
+		    throw new IllegalArgumentException(
+			    "Can only pause a running download: "
+				    + cursor.getLong(cursor
+					    .getColumnIndex(COLUMN_ID)));
+		}
+	    }
+	} finally {
+	    cursor.close();
+	}
+
+	ContentValues values = new ContentValues();
+	values.put(Downloads.COLUMN_CONTROL, Downloads.CONTROL_PAUSED);
+	values.put(Downloads.COLUMN_NO_INTEGRITY, 1);
+	mResolver.update(mBaseUri, values, getWhereClauseForIds(ids),
+		getWhereArgsForIds(ids));
+    }
+    
+    /**
+     * Resume the given downloads, which must be paused. This method will only
+     * work when called from within the download manager's process.
+     * 
+     * @param ids
+     *            the IDs of the downloads
+     * @hide
+     */
+    public void resumeDownload(long... ids) {
+	Cursor cursor = query(new Query().setFilterById(ids));
+	try {
+	    for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor
+		    .moveToNext()) {
+		int status = cursor
+			.getInt(cursor.getColumnIndex(COLUMN_STATUS));
+		if (status != STATUS_PAUSED) {
+		    throw new IllegalArgumentException(
+			    "Cann only resume a paused download: "
+				    + cursor.getLong(cursor
+					    .getColumnIndex(COLUMN_ID)));
+		}
+	    }
+	} finally {
+	    cursor.close();
+	}
+
+	ContentValues values = new ContentValues();
+	values.put(Downloads.COLUMN_STATUS, Downloads.STATUS_PENDING);
+	values.put(Downloads.COLUMN_CONTROL, Downloads.CONTROL_RUN);
+	mResolver.update(mBaseUri, values, getWhereClauseForIds(ids),
+		getWhereArgsForIds(ids));
+    }    
+    
 
     /**
      * Restart the given downloads, which must have already completed
