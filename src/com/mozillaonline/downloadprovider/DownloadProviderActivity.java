@@ -23,7 +23,7 @@ public class DownloadProviderActivity extends Activity implements
     @SuppressWarnings("unused")
     private static final String TAG = DownloadProviderActivity.class.getName();
 
-    private BroadcastReceiver mReceiver;    
+    private BroadcastReceiver mReceiver;
 
     EditText mUrlInputEditText;
     Button mStartDownloadButton;
@@ -40,18 +40,19 @@ public class DownloadProviderActivity extends Activity implements
 		getPackageName());
 	buildComponents();
 	startDownloadService();
-	
+
 	mReceiver = new BroadcastReceiver() {
-	    
+
 	    @Override
 	    public void onReceive(Context context, Intent intent) {
 		showDownloadList();
 	    }
 	};
-	
-	registerReceiver(mReceiver, new IntentFilter(DownloadManager.ACTION_NOTIFICATION_CLICKED));
+
+	registerReceiver(mReceiver, new IntentFilter(
+		DownloadManager.ACTION_NOTIFICATION_CLICKED));
     }
-    
+
     @Override
     protected void onDestroy() {
 	unregisterReceiver(mReceiver);
@@ -66,8 +67,7 @@ public class DownloadProviderActivity extends Activity implements
 	mStartDownloadButton.setOnClickListener(this);
 	mShowDownloadListButton.setOnClickListener(this);
 
-	mUrlInputEditText
-		.setText("http://down.mumayi.com/41052/mbaidu");
+	mUrlInputEditText.setText("http://down.mumayi.com/41052/mbaidu");
     }
 
     private void startDownloadService() {
