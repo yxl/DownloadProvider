@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  Copyright (C) 2007 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="permlab_downloadManager" msgid="7779544811202855500">"访问下载管理器。"</string>
+    <string name="permdesc_downloadManager" msgid="4240298564918160337">"允许应用程序访问下载管理器以及用它下载文件。恶意应用程序可借此干扰下载，以及访问隐私信息。"</string>
+    <string name="permlab_downloadManagerAdvanced" msgid="7103642833308809655">"高级下载管理器功能。"</string>
+    <string name="permdesc_downloadManagerAdvanced" msgid="6985743912436565114">"允许应用程序使用下载管理器的高级功能。恶意应用程序可能会借此中断下载以及访问私密信息。"</string>
+    <string name="permlab_downloadCompletedIntent" msgid="945913803765675685">"发送下载通知。"</string>
+    <string name="permdesc_downloadCompletedIntent" msgid="8672701687104399228">"允许应用程序发送关于已完成下载的通知。恶意应用程序可借此干扰下载文件的其他应用程序。"</string>
+    <string name="permlab_downloadCacheNonPurgeable" msgid="3069534308882047412">"保留下载缓存中的空间"</string>
+    <string name="permdesc_downloadCacheNonPurgeable" msgid="1089583021652571424">"允许应用程序将文件下载到下载缓存（系统不会因为下载管理器需要更多空间而自动删除下载缓存）。"</string>
+    <string name="permlab_accessAllDownloads" msgid="2436240495424393717">"访问所有系统下载内容"</string>
+    <string name="permdesc_accessAllDownloads" msgid="4575801130424505112">"允许该应用程序查看和修改由系统中的任意程序所发起的所有下载。"</string>
+    <string name="download_unknown_title" msgid="7015124071247271585">"&lt;未命名&gt;"</string>
+    <string name="notification_filename_separator" msgid="7147189522857807618">", "</string>
+    <string name="notification_filename_extras" msgid="5549729917695688191">" 还有 <xliff:g id="NUMBER">%d</xliff:g> 项"</string>
+    <string name="notification_download_complete" msgid="840713937779273632">"下载完成"</string>
+    <string name="notification_download_failed" msgid="5343637375905111462">"下载失败"</string>
+    <string name="notification_need_wifi_for_size" msgid="5973127997598540499">"此大小的文件需要通过 Wi-Fi 下载"</string>
+    <string name="wifi_required_title" msgid="1995971416871498179">"文件太大，不适于通过运营商网络下载"</string>
+    <string name="wifi_required_body" msgid="1675692697446715831">"您必须使用 Wi-Fi 才能完成此 <xliff:g id="SIZE">%s </xliff:g> 文件的下载。"\n\n"点击<xliff:g id="QUEUE_TEXT">%s </xliff:g>可在下次连接到 Wi-Fi 网络时开始此下载。"</string>
+    <string name="wifi_recommended_title" msgid="7441589306734687400">"稍后再加入下载队列吗？"</string>
+    <string name="wifi_recommended_body" msgid="7574517147645381271">"立即开始此 <xliff:g id="SIZE">%s </xliff:g> 文件的下载可能会缩短电池的使用时间并/或导致超额使用移动数据连接（这会导致移动运营商依照流量套餐中的超额规定向您收费）。"\n\n"点击下面的<xliff:g id="QUEUE_TEXT">%s</xliff:g>可在下次连接到 Wi-Fi 网络时开始此下载。"</string>
+    <string name="button_queue_for_wifi" msgid="422576726189179221">"排队"</string>
+    <string name="button_cancel_download" msgid="2430166148737975604">"取消"</string>
+    <string name="button_start_now" msgid="792123674007840864">"立即开始"</string>
+</resources>

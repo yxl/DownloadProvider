@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+** Copyright 2010, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+    <!-- The main area showing the list of downloads -->
+    <FrameLayout android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:layout_weight="1">
+        <ExpandableListView android:id="@+id/date_ordered_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+        <ListView android:id="@+id/size_ordered_list"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"/>
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:id="@+id/empty"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:text="@string/no_downloads"
+                  android:gravity="center"
+                  android:textStyle="bold"/>
+    </FrameLayout>
+
+    <!-- The selection menu that pops up from the bottom of the screen -->
+    <LinearLayout android:id="@+id/selection_menu"
+                  android:orientation="horizontal"
+                  android:visibility="gone"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:paddingTop="5dip"
+                  android:paddingLeft="4dip"
+                  android:paddingRight="4dip"
+                  android:paddingBottom="1dip"
+                  android:gravity="center"
+                  android:layout_gravity="center"
+                  android:background="@android:drawable/bottom_bar">
+          <Button android:id="@+id/selection_delete"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:layout_weight="1"/>
+          <Button android:id="@+id/deselect_all"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:layout_weight="1"
+                  android:text="@string/deselect_all"/>
+
+      </LinearLayout>
+</LinearLayout>
