@@ -57,13 +57,6 @@ public final class Downloads implements BaseColumns {
     public static final String PERMISSION_ACCESS_ALL = "com.mozillaonline.permission.ACCESS_ALL_DOWNLOADS";
 
     /**
-     * The permission to directly access the download manager's cache directory
-     * 
-     * @hide
-     */
-    public static final String PERMISSION_CACHE = "com.mozillaonline.permission.ACCESS_CACHE_FILESYSTEM";
-
-    /**
      * The permission to send broadcasts on download completion
      * 
      * @hide
