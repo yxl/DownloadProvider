@@ -243,8 +243,7 @@ public class DownloadService extends Service {
 		}
 
 		// is there a need to start the DownloadService? yes, if there
-		// are rows to be
-		// deleted.
+		// are rows to be deleted.
 
 		for (DownloadInfo info : mDownloads.values()) {
 		    if (info.mDeleted) {

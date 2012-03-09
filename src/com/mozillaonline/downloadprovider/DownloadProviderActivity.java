@@ -81,8 +81,8 @@ public class DownloadProviderActivity extends Activity implements
 	String url = mUrlInputEditText.getText().toString();
 	Uri srcUri = Uri.parse(url);
 	DownloadManager.Request request = new Request(srcUri);
-	for (int i=0; i<5; i++) {
-	    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, String.valueOf(i));
+	for (int i=0; i<2; i++) {
+	    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "/");
 	    mDownloadManager.enqueue(request);
 	}
     }

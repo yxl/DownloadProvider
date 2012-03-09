@@ -93,7 +93,7 @@ public class Helpers {
 	    String mimeType, int destination, long contentLength,
 	    boolean isPublicApi) throws GenerateSaveFileError {
 	checkCanHandleDownload(context, mimeType, destination, isPublicApi);
-	if (destination == Downloads.DESTINATION_FILE_URI) {
+	if (destination == Downloads.DESTINATION_FILE_URI && !hint.trim().endsWith("/")) {
 	    return getPathForFileUri(hint, contentLength);
 	} else {
 	    return chooseFullPath(context, url, hint, contentDisposition,
