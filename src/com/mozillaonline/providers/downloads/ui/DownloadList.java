@@ -251,7 +251,7 @@ public class DownloadList extends Activity implements OnChildClickListener,
     public boolean onCreateOptionsMenu(Menu menu) {
 	if (haveCursors()) {
 	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.download_menu, menu);
+	    inflater.inflate(R.menu.download_ui_menu, menu);
 	}
 	return true;
     }

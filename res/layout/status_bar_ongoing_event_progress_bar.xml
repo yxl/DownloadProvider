@@ -18,19 +18,19 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@android:drawable/status_bar_item_app_background"
     android:orientation="vertical" >
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:orientation="horizontal" >
 
         <LinearLayout
             android:layout_width="40dp"
-            android:layout_height="match_parent"
+            android:layout_height="fill_parent"
             android:clickable="true"
             android:focusable="true"
             android:orientation="vertical"
@@ -52,14 +52,14 @@
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:clickable="true"
             android:focusable="true"
             android:orientation="vertical" >
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:clickable="true"
@@ -86,7 +86,7 @@
             <ProgressBar
                 android:id="@+id/progress_bar"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:paddingBottom="8dp"
@@ -94,7 +94,7 @@
 
             <TextView
                 android:id="@+id/paused_text"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:paddingBottom="8dp"
@@ -104,7 +104,7 @@
     </LinearLayout>
 
     <ImageView
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:src="@android:drawable/divider_horizontal_bright" />
 
