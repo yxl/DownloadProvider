@@ -93,23 +93,29 @@ public class Helpers {
 	    String mimeType, int destination, long contentLength,
 	    boolean isPublicApi) throws GenerateSaveFileError {
 	checkCanHandleDownload(context, mimeType, destination, isPublicApi);
-	if (destination == Downloads.DESTINATION_FILE_URI && !hint.trim().endsWith("/")) {
-	    return getPathForFileUri(hint, contentLength);
+	if (destination == Downloads.DESTINATION_FILE_URI) {
+	    return getPathForFileUri(url, hint, contentDisposition,
+		    contentLocation, mimeType, destination, contentLength);
 	} else {
 	    return chooseFullPath(context, url, hint, contentDisposition,
 		    contentLocation, mimeType, destination, contentLength);
 	}
     }
 
-    private static String getPathForFileUri(String hint, long contentLength)
-	    throws GenerateSaveFileError {
+    private static String getPathForFileUri(String url, String hint,
+	    String contentDisposition, String contentLocation, String mimeType,
+	    int destination, long contentLength) throws GenerateSaveFileError {
 	if (!isExternalMediaMounted()) {
 	    throw new GenerateSaveFileError(
 		    Downloads.STATUS_DEVICE_NOT_FOUND_ERROR,
 		    "external media not mounted");
 	}
 	String path = Uri.parse(hint).getPath();
-	if (new File(path).exists()) {
+	if (path.endsWith("/")) {
+	    String basePath = path.substring(0, path.length() - 1);
+	    path = generateFilePath(basePath, url, contentDisposition,
+		    contentLocation, mimeType, destination, contentLength);
+	} else if (new File(path).exists()) {
 	    Log.d(Constants.TAG, "File already exists: " + path);
 	    throw new GenerateSaveFileError(
 		    Downloads.STATUS_FILE_ALREADY_EXISTS_ERROR,
@@ -140,13 +146,10 @@ public class Helpers {
 		"Cannot determine filesystem root for " + path);
     }
 
-    private static String chooseFullPath(Context context, String url,
-	    String hint, String contentDisposition, String contentLocation,
-	    String mimeType, int destination, long contentLength)
-	    throws GenerateSaveFileError {
-	File base = locateDestinationDirectory(context, mimeType, destination,
-		contentLength);
-	String filename = chooseFilename(url, hint, contentDisposition,
+    private static String generateFilePath(String basePath, String url,
+	    String contentDisposition, String contentLocation, String mimeType,
+	    int destination, long contentLength) throws GenerateSaveFileError {
+	String filename = chooseFilename(url, null, contentDisposition,
 		contentLocation, destination);
 
 	// Split filename between base and extension
@@ -164,7 +167,7 @@ public class Helpers {
 	boolean recoveryDir = Constants.RECOVERY_DIRECTORY
 		.equalsIgnoreCase(filename + extension);
 
-	filename = base.getPath() + File.separator + filename;
+	filename = basePath + File.separator + filename;
 
 	if (Constants.LOGVV) {
 	    Log.v(Constants.TAG, "target file: " + filename + extension);
@@ -172,6 +175,16 @@ public class Helpers {
 
 	return chooseUniqueFilename(destination, filename, extension,
 		recoveryDir);
+    }
+
+    private static String chooseFullPath(Context context, String url,
+	    String hint, String contentDisposition, String contentLocation,
+	    String mimeType, int destination, long contentLength)
+	    throws GenerateSaveFileError {
+	File base = locateDestinationDirectory(context, mimeType, destination,
+		contentLength);
+	return generateFilePath(base.getPath(), url, contentDisposition,
+		contentLocation, mimeType, destination, contentLength);
     }
 
     private static void checkCanHandleDownload(Context context,

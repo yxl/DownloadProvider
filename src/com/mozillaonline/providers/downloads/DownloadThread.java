@@ -135,6 +135,7 @@ public class DownloadThread extends Thread {
      * download should be retried immediately.
      */
     private class RetryDownload extends Throwable {
+	private static final long serialVersionUID = 1L;
     }
 
     /**

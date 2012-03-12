@@ -584,6 +584,8 @@ public class DownloadManager {
 	    values.put(Downloads.COLUMN_ALLOW_ROAMING, mRoamingAllowed);
 	    values.put(Downloads.COLUMN_IS_VISIBLE_IN_DOWNLOADS_UI,
 		    mIsVisibleInDownloadsUi);
+	    
+	    values.put(Downloads.COLUMN_NO_INTEGRITY, 1);
 
 	    return values;
 	}

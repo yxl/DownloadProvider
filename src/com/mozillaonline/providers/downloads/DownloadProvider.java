@@ -1135,11 +1135,13 @@ public final class DownloadProvider extends ContentProvider {
 	    mCursor = (CrossProcessCursor) cursor;
 	}
 
+	@SuppressWarnings("unused")
 	public boolean deleteRow() {
 	    throw new SecurityException(
 		    "Download manager cursors are read-only");
 	}
 
+	@SuppressWarnings("unused")
 	public boolean commitUpdates() {
 	    throw new SecurityException(
 		    "Download manager cursors are read-only");
