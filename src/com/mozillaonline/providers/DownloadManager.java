@@ -145,13 +145,6 @@ public class DownloadManager {
     public final static String COLUMN_LAST_MODIFIED_TIMESTAMP = "last_modified_timestamp";
 
     /**
-     * The URI to the corresponding entry in MediaProvider for this downloaded
-     * entry. It is used to delete the entries from MediaProvider database when
-     * it is deleted from the downloaded list.
-     */
-    public static final String COLUMN_MEDIAPROVIDER_URI = "mediaprovider_uri";
-
-    /**
      * Value of {@link #COLUMN_STATUS} when the download is waiting to start.
      */
     public final static int STATUS_PENDING = 1 << 0;
@@ -287,10 +280,10 @@ public class DownloadManager {
 
     // this array must contain all public columns
     private static final String[] COLUMNS = new String[] { COLUMN_ID,
-	    COLUMN_MEDIAPROVIDER_URI, COLUMN_TITLE, COLUMN_DESCRIPTION,
-	    COLUMN_URI, COLUMN_MEDIA_TYPE, COLUMN_TOTAL_SIZE_BYTES,
-	    COLUMN_LOCAL_URI, COLUMN_STATUS, COLUMN_REASON,
-	    COLUMN_BYTES_DOWNLOADED_SO_FAR, COLUMN_LAST_MODIFIED_TIMESTAMP };
+	    COLUMN_TITLE, COLUMN_DESCRIPTION, COLUMN_URI, COLUMN_MEDIA_TYPE,
+	    COLUMN_TOTAL_SIZE_BYTES, COLUMN_LOCAL_URI, COLUMN_STATUS,
+	    COLUMN_REASON, COLUMN_BYTES_DOWNLOADED_SO_FAR,
+	    COLUMN_LAST_MODIFIED_TIMESTAMP };
 
     // columns to request from DownloadProvider
     private static final String[] UNDERLYING_COLUMNS = new String[] {
@@ -584,7 +577,7 @@ public class DownloadManager {
 	    values.put(Downloads.COLUMN_ALLOW_ROAMING, mRoamingAllowed);
 	    values.put(Downloads.COLUMN_IS_VISIBLE_IN_DOWNLOADS_UI,
 		    mIsVisibleInDownloadsUi);
-	    
+
 	    values.put(Downloads.COLUMN_NO_INTEGRITY, 1);
 
 	    return values;
@@ -914,7 +907,7 @@ public class DownloadManager {
 		    .moveToNext()) {
 		int status = cursor
 			.getInt(cursor.getColumnIndex(COLUMN_STATUS));
-		if (status != STATUS_RUNNING && status != STATUS_PENDING ) {
+		if (status != STATUS_RUNNING && status != STATUS_PENDING) {
 		    throw new IllegalArgumentException(
 			    "Can only pause a running download: "
 				    + cursor.getLong(cursor
@@ -931,7 +924,7 @@ public class DownloadManager {
 	mResolver.update(mBaseUri, values, getWhereClauseForIds(ids),
 		getWhereArgsForIds(ids));
     }
-    
+
     /**
      * Resume the given downloads, which must be paused. This method will only
      * work when called from within the download manager's process.
@@ -963,8 +956,7 @@ public class DownloadManager {
 	values.put(Downloads.COLUMN_CONTROL, Downloads.CONTROL_RUN);
 	mResolver.update(mBaseUri, values, getWhereClauseForIds(ids),
 		getWhereArgsForIds(ids));
-    }    
-    
+    }
 
     /**
      * Restart the given downloads, which must have already completed
@@ -1046,11 +1038,8 @@ public class DownloadManager {
      * underlying data.
      */
     private static class CursorTranslator extends CursorWrapper {
-	private Uri mBaseUri;
-
 	public CursorTranslator(Cursor cursor, Uri baseUri) {
 	    super(cursor);
-	    mBaseUri = baseUri;
 	}
 
 	@Override
@@ -1152,24 +1141,11 @@ public class DownloadManager {
 	}
 
 	private String getLocalUri() {
-	    long destinationType = getUnderlyingLong(Downloads.COLUMN_DESTINATION);
-	    if (destinationType == Downloads.DESTINATION_FILE_URI) {
-		// return client-provided file URI for external download
-		return getUnderlyingString(Downloads.COLUMN_FILE_NAME_HINT);
+	    String localPath = getUnderlyingString(Downloads._DATA);
+	    if (localPath == null) {
+		return null;
 	    }
-
-	    if (destinationType == Downloads.DESTINATION_EXTERNAL) {
-		// return stored destination for legacy external download
-		String localPath = getUnderlyingString(Downloads._DATA);
-		if (localPath == null) {
-		    return null;
-		}
-		return Uri.fromFile(new File(localPath)).toString();
-	    }
-
-	    // return content URI for cache download
-	    long downloadId = getUnderlyingLong(Downloads._ID);
-	    return ContentUris.withAppendedId(mBaseUri, downloadId).toString();
+	    return Uri.fromFile(new File(localPath)).toString();
 	}
 
 	private long translateLong(String column) {

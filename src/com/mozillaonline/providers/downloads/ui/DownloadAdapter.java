@@ -37,6 +37,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mozillaonline.downloadprovider.R;
@@ -54,14 +55,14 @@ public class DownloadAdapter extends CursorAdapter {
     private DateFormat mDateFormat;
     private DateFormat mTimeFormat;
 
-    private int mTitleColumnId;
-    private int mDescriptionColumnId;
-    private int mStatusColumnId;
-    private int mReasonColumnId;
-    private int mTotalBytesColumnId;
-    private int mMediaTypeColumnId;
-    private int mDateColumnId;
-    private int mIdColumnId;
+    final private int mTitleColumnId;
+    final private int mStatusColumnId;
+    final private int mReasonColumnId;
+    final private int mTotalBytesColumnId;
+    final private int mCurrentBytesColumnId;
+    final private int mMediaTypeColumnId;
+    final private int mDateColumnId;
+    final private int mIdColumnId;
 
     public DownloadAdapter(Context context, Cursor cursor,
 	    DownloadSelectListener selectionListener) {
@@ -76,16 +77,16 @@ public class DownloadAdapter extends CursorAdapter {
 	mIdColumnId = cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_ID);
 	mTitleColumnId = cursor
 		.getColumnIndexOrThrow(DownloadManager.COLUMN_TITLE);
-	mDescriptionColumnId = cursor
-		.getColumnIndexOrThrow(DownloadManager.COLUMN_DESCRIPTION);
 	mStatusColumnId = cursor
 		.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS);
 	mReasonColumnId = cursor
 		.getColumnIndexOrThrow(DownloadManager.COLUMN_REASON);
 	mTotalBytesColumnId = cursor
 		.getColumnIndexOrThrow(DownloadManager.COLUMN_TOTAL_SIZE_BYTES);
+	mCurrentBytesColumnId = cursor
+		.getColumnIndexOrThrow(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR);
 	mMediaTypeColumnId = cursor
-		.getColumnIndexOrThrow(DownloadManager.COLUMN_MEDIA_TYPE);	
+		.getColumnIndexOrThrow(DownloadManager.COLUMN_MEDIA_TYPE);
 	mDateColumnId = cursor
 		.getColumnIndexOrThrow(DownloadManager.COLUMN_LAST_MODIFIED_TIMESTAMP);
     }
@@ -109,15 +110,34 @@ public class DownloadAdapter extends CursorAdapter {
 	retrieveAndSetIcon(convertView);
 
 	String title = mCursor.getString(mTitleColumnId);
+	long totalBytes = mCursor.getLong(mTotalBytesColumnId);
+	long currentBytes = mCursor.getLong(mCurrentBytesColumnId);
+	int status = mCursor.getInt(mStatusColumnId);
+
 	if (title.length() == 0) {
 	    title = mResources.getString(R.string.missing_title);
 	}
 	setTextForView(convertView, R.id.download_title, title);
-	setTextForView(convertView, R.id.desc,
-		mCursor.getString(mDescriptionColumnId));
-	setTextForView(convertView, R.id.size_text, getSizeText());
+
+	int progress = getProgressValue(totalBytes, currentBytes);
+
+	boolean indeterminate = status == DownloadManager.STATUS_PENDING;
+	ProgressBar progressBar = (ProgressBar) convertView
+		.findViewById(R.id.download_progress);
+	progressBar.setIndeterminate(indeterminate);
+	if (!indeterminate) {
+	    progressBar.setProgress(progress);
+	}
+	if (status == DownloadManager.STATUS_FAILED
+		|| status == DownloadManager.STATUS_SUCCESSFUL) {
+	    progressBar.setVisibility(View.GONE);
+	} else {
+	    progressBar.setVisibility(View.VISIBLE);
+	}
+
+	setTextForView(convertView, R.id.size_text, getSizeText(totalBytes));
 	setTextForView(convertView, R.id.status_text,
-		mResources.getString(getStatusStringId()));
+		mResources.getString(getStatusStringId(status)));
 	setTextForView(convertView, R.id.last_modified_date, getDateString());
 
 	CheckBox checkBox = (CheckBox) convertView
@@ -144,8 +164,14 @@ public class DownloadAdapter extends CursorAdapter {
 	return today.getTime();
     }
 
-    private String getSizeText() {
-	long totalBytes = mCursor.getLong(mTotalBytesColumnId);
+    public int getProgressValue(long totalBytes, long currentBytes) {
+	if (totalBytes == -1) {
+	    return 0;
+	}
+	return (int) (currentBytes * 100 / totalBytes);
+    }
+
+    private String getSizeText(long totalBytes) {
 	String sizeText = "";
 	if (totalBytes >= 0) {
 	    sizeText = Formatter.formatFileSize(mContext, totalBytes);
@@ -153,8 +179,8 @@ public class DownloadAdapter extends CursorAdapter {
 	return sizeText;
     }
 
-    private int getStatusStringId() {
-	switch (mCursor.getInt(mStatusColumnId)) {
+    private int getStatusStringId(int status) {
+	switch (status) {
 	case DownloadManager.STATUS_FAILED:
 	    return R.string.download_error;
 
