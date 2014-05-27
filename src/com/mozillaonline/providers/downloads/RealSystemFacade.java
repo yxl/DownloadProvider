@@ -14,7 +14,7 @@ class RealSystemFacade implements SystemFacade {
     private Context mContext;
     private NotificationManager mNotificationManager;
     // 2 GB
-    private static final long DOWNLOAD_MAX_BYTES_OVER_MOBILE = 2 * 1024 * 1024 * 1024;
+    private static final long DOWNLOAD_MAX_BYTES_OVER_MOBILE = 2 * 1024 * 1024 * 1024L;
     // 1 GB
     private static final long DOWNLOAD_RECOMMENDED_MAX_BYTES_OVER_MOBILE = 1024 * 1024 * 1024;
     public RealSystemFacade(Context context) {
