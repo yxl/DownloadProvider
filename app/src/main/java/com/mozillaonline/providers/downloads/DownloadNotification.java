@@ -150,16 +150,16 @@ class DownloadNotification {
         // Add the notifications
         for (NotificationItem item : mNotifications.values()) {
             // Build the notification object
-            Notification n = new Notification();
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext);
 
             boolean hasPausedText = (item.mPausedText != null);
             int iconResource = android.R.drawable.stat_sys_download;
             if (hasPausedText) {
                 iconResource = android.R.drawable.stat_sys_warning;
             }
-            n.icon = iconResource;
+            builder.setSmallIcon(iconResource);
 
-            n.flags |= Notification.FLAG_ONGOING_EVENT;
+            builder.setOngoing(true);
 
             // Build the RemoteView object
             RemoteViews expandedView = new RemoteViews(mContext.getPackageName(),
@@ -168,7 +168,7 @@ class DownloadNotification {
             if (item.mTitleCount > 1) {
                 title.append(mContext.getString(R.string.notification_filename_separator));
                 title.append(item.mTitles[1]);
-                n.number = item.mTitleCount;
+                builder.setNumber(item.mTitleCount);
                 if (item.mTitleCount > 2) {
                     title.append(mContext.getString(R.string.notification_filename_extras,
                             new Object[] { Integer.valueOf(item.mTitleCount - 2) }));
@@ -192,7 +192,7 @@ class DownloadNotification {
             expandedView.setTextViewText(R.id.progress_text,
                     getDownloadingText(item.mTotalTotal, item.mTotalCurrent));
             expandedView.setImageViewResource(R.id.appIcon, iconResource);
-            n.contentView = expandedView;
+            builder.setContent(expandedView);
 
             Intent intent = new Intent(Constants.ACTION_LIST);
             intent.setClassName(mContext.getPackageName(),
@@ -201,9 +201,9 @@ class DownloadNotification {
                     ContentUris.withAppendedId(Downloads.ALL_DOWNLOADS_CONTENT_URI, item.mId));
             intent.putExtra("multiple", item.mTitleCount > 1);
 
-            n.contentIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0);
+            builder.setContentIntent(PendingIntent.getBroadcast(mContext, 0, intent, 0));
 
-            mSystemFacade.postNotification(item.mId, n);
+            mSystemFacade.postNotification(item.mId, builder.build());
 
         }
     }
