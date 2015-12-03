@@ -25,6 +25,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -213,8 +214,8 @@ class DownloadNotification {
                 continue;
             }
             // Add the notifications
-            Notification n = new Notification();
-            n.icon = android.R.drawable.stat_sys_download_done;
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext);
+            builder.setSmallIcon(android.R.drawable.stat_sys_download_done);
 
             long id = download.mId;
             String title = download.mTitle;
@@ -243,17 +244,19 @@ class DownloadNotification {
                     DownloadReceiver.class.getName());
             intent.setData(contentUri);
 
-            n.when = download.mLastMod;
-            n.setLatestEventInfo(mContext, title, caption,
-                    PendingIntent.getBroadcast(mContext, 0, intent, 0));
+            builder.setWhen(download.mLastMod);
+            builder.setContentTitle(title);
+            builder.setContentText(caption);
+            builder.setContentIntent(PendingIntent.getBroadcast(mContext, 0, intent, 0));
 
             intent = new Intent(Constants.ACTION_HIDE);
             intent.setClassName(mContext.getPackageName(),
                     DownloadReceiver.class.getName());
             intent.setData(contentUri);
-            n.deleteIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0);
 
-            mSystemFacade.postNotification(download.mId, n);
+            builder.setDeleteIntent(PendingIntent.getBroadcast(mContext, 0, intent, 0));
+
+            mSystemFacade.postNotification(download.mId, builder.build());
         }
     }
 
