@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/leridge/DownloadProvider/app/src/androidTest/res"/><source path="/Users/leridge/DownloadProvider/app/build/generated/res/rs/androidTest/debug"/><source path="/Users/leridge/DownloadProvider/app/build/generated/res/resValues/androidTest/debug"/></dataSet><mergedItems/></merger>
+<merger version="3">
+    <dataSet config="main">
+        <source path="/Users/blinko/Documents/workspace/DownloadProvider/app/src/androidTest/res" />
+        <source
+            path="/Users/blinko/Documents/workspace/DownloadProvider/app/build/generated/res/rs/androidTest/debug" />
+        <source
+            path="/Users/blinko/Documents/workspace/DownloadProvider/app/build/generated/res/resValues/androidTest/debug" />
+    </dataSet>
+    <mergedItems />
+</merger>

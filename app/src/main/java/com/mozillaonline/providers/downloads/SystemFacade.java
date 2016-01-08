@@ -1,4 +1,3 @@
-
 package com.mozillaonline.providers.downloads;
 
 import android.app.Notification;

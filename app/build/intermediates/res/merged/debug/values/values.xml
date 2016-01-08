@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- From: file:/Users/leridge/DownloadProvider/app/src/main/res/values/download_ui_dimen.xml -->
+    <!-- From: file:/Users/blinko/Documents/workspace/DownloadProvider/app/src/main/res/values/download_ui_dimen.xml -->
     <eat-comment/>
     <dimen name="checkmark_area">40dip</dimen>
-    <!-- From: file:/Users/leridge/DownloadProvider/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/blinko/Documents/workspace/DownloadProvider/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="app_name">DownloadProvider</string>
-    <!-- From: file:/Users/leridge/DownloadProvider/app/src/main/res/values/download_strings.xml -->
+    <!-- From: file:/Users/blinko/Documents/workspace/DownloadProvider/app/src/main/res/values/download_strings.xml -->
     <eat-comment/>
     <string name="button_cancel_download">Cancel</string>
     <string name="button_queue_for_wifi">Queue</string>
     <string name="button_start_now">Start now</string>
-    <!-- From: file:/Users/leridge/DownloadProvider/app/src/main/res/values/download_ui_strings.xml -->
+    <!-- From: file:/Users/blinko/Documents/workspace/DownloadProvider/app/src/main/res/values/download_ui_strings.xml -->
     <eat-comment/>
     <string name="cancel_running_download">Cancel</string>
     <string name="delete_download">Delete</string>
@@ -40,25 +40,25 @@
     <string name="download_running">In progress</string>
     <string name="download_success">Complete</string>
     <string name="download_title">Downloads</string>
-    <!-- From: file:/Users/leridge/DownloadProvider/app/src/main/res/values/download_strings.xml -->
+    <!-- From: file:/Users/blinko/Documents/workspace/DownloadProvider/app/src/main/res/values/download_strings.xml -->
     <eat-comment/>
     <string name="download_unknown_title">&lt;Untitled></string>
-    <!-- From: file:/Users/leridge/DownloadProvider/app/src/main/res/values/download_ui_strings.xml -->
+    <!-- From: file:/Users/blinko/Documents/workspace/DownloadProvider/app/src/main/res/values/download_ui_strings.xml -->
     <eat-comment/>
     <string name="keep_queued_download">Keep</string>
     <string name="missing_title">&lt;Unknown></string>
     <string name="no_downloads">No downloads.</string>
-    <!-- From: file:/Users/leridge/DownloadProvider/app/src/main/res/values/download_strings.xml -->
+    <!-- From: file:/Users/blinko/Documents/workspace/DownloadProvider/app/src/main/res/values/download_strings.xml -->
     <eat-comment/>
     <string name="notification_download_complete">Download complete</string>
     <string name="notification_download_failed">Download unsuccessful</string>
     <string name="notification_filename_extras">" and <ns1:g example="27" id="number">%d</ns1:g> more"</string>
     <string name="notification_filename_separator">", "</string>
     <string name="notification_need_wifi_for_size">Download size requires Wi-Fi</string>
-    <!-- From: file:/Users/leridge/DownloadProvider/app/src/main/res/values/download_ui_strings.xml -->
+    <!-- From: file:/Users/blinko/Documents/workspace/DownloadProvider/app/src/main/res/values/download_ui_strings.xml -->
     <eat-comment/>
     <string name="pause_download">Pause</string>
-    <!-- From: file:/Users/leridge/DownloadProvider/app/src/main/res/values/download_strings.xml -->
+    <!-- From: file:/Users/blinko/Documents/workspace/DownloadProvider/app/src/main/res/values/download_strings.xml -->
     <eat-comment/>
     <string name="permdesc_accessAllDownloads">Allows the application to view
     and modify all initiated by any application on the system.</string>
@@ -86,12 +86,12 @@
     <string name="permlab_downloadManager">Access download manager.</string>
     <string name="permlab_downloadManagerAdvanced">Advanced download
         manager functions.</string>
-    <!-- From: file:/Users/leridge/DownloadProvider/app/src/main/res/values/download_ui_strings.xml -->
+    <!-- From: file:/Users/blinko/Documents/workspace/DownloadProvider/app/src/main/res/values/download_ui_strings.xml -->
     <eat-comment/>
     <string name="remove_download">Remove</string>
     <string name="resume_download">Resume</string>
     <string name="retry_download">Retry</string>
-    <!-- From: file:/Users/leridge/DownloadProvider/app/src/main/res/values/download_strings.xml -->
+    <!-- From: file:/Users/blinko/Documents/workspace/DownloadProvider/app/src/main/res/values/download_strings.xml -->
     <eat-comment/>
     <string name="wifi_recommended_body">Starting this <ns1:g example="12.3KB" id="size">%s
         </ns1:g> download now may shorten your battery life and/or result in
@@ -106,7 +106,7 @@
         </ns1:g> to begin this download the next time you are connected to a WiFi
         network.</string>
     <string name="wifi_required_title">Download too large for operator network</string>
-    <!-- From: file:/Users/leridge/DownloadProvider/app/src/main/res/values/download_styles.xml -->
+    <!-- From: file:/Users/blinko/Documents/workspace/DownloadProvider/app/src/main/res/values/download_styles.xml -->
     <eat-comment/>
     <style name="Theme.Translucent" parent="android:style/Theme.Translucent">
         <item name="android:windowNoTitle">true</item>

@@ -49,8 +49,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.mozillaonline.providers.downloads.ui.DownloadList" >
-        </activity>
+        <activity android:name="com.mozillaonline.providers.downloads.ui.DownloadList" />
 
         <provider
             android:name="com.mozillaonline.providers.downloads.DownloadProvider"

@@ -38,11 +38,6 @@ public class DownloadItem extends RelativeLayout {
     private long mDownloadId;
     private DownloadSelectListener mListener;
 
-    static interface DownloadSelectListener {
-        public void onDownloadSelectionChanged(long downloadId, boolean isSelected);
-        public boolean isDownloadSelected(long id);
-    }
-
     public DownloadItem(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initialize();
@@ -81,7 +76,7 @@ public class DownloadItem extends RelativeLayout {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         boolean handled = false;
-        switch(event.getAction()) {
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 if (event.getX() < CHECKMARK_AREA) {
                     mIsInDownEvent = true;
@@ -114,5 +109,11 @@ public class DownloadItem extends RelativeLayout {
     private void toggleCheckMark() {
         mCheckBox.toggle();
         mListener.onDownloadSelectionChanged(mDownloadId, mCheckBox.isChecked());
+    }
+
+    static interface DownloadSelectListener {
+        public void onDownloadSelectionChanged(long downloadId, boolean isSelected);
+
+        public boolean isDownloadSelected(long id);
     }
 }

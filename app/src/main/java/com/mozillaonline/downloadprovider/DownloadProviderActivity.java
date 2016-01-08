@@ -19,91 +19,91 @@ import com.mozillaonline.providers.downloads.DownloadService;
 import com.mozillaonline.providers.downloads.ui.DownloadList;
 
 public class DownloadProviderActivity extends Activity implements
-	OnClickListener {
+        OnClickListener {
     @SuppressWarnings("unused")
     private static final String TAG = DownloadProviderActivity.class.getName();
-
-    private BroadcastReceiver mReceiver;
-
     EditText mUrlInputEditText;
     Button mStartDownloadButton;
     DownloadManager mDownloadManager;
     Button mShowDownloadListButton;
+    private BroadcastReceiver mReceiver;
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-	super.onCreate(savedInstanceState);
-	setContentView(R.layout.main);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
 
-	mDownloadManager = new DownloadManager(getContentResolver(),
-		getPackageName());
-	buildComponents();
-	startDownloadService();
+        mDownloadManager = new DownloadManager(getContentResolver(),
+                getPackageName());
+        buildComponents();
+        startDownloadService();
 
-	mReceiver = new BroadcastReceiver() {
+        mReceiver = new BroadcastReceiver() {
 
-	    @Override
-	    public void onReceive(Context context, Intent intent) {
-		showDownloadList();
-	    }
-	};
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                showDownloadList();
+            }
+        };
 
-	registerReceiver(mReceiver, new IntentFilter(
-		DownloadManager.ACTION_NOTIFICATION_CLICKED));
+        registerReceiver(mReceiver, new IntentFilter(
+                DownloadManager.ACTION_NOTIFICATION_CLICKED));
     }
 
     @Override
     protected void onDestroy() {
-	unregisterReceiver(mReceiver);
-	super.onDestroy();
+        unregisterReceiver(mReceiver);
+        super.onDestroy();
     }
 
     private void buildComponents() {
-	mUrlInputEditText = (EditText) findViewById(R.id.url_input_edittext);
-	mStartDownloadButton = (Button) findViewById(R.id.start_download_button);
-	mShowDownloadListButton = (Button) findViewById(R.id.show_download_list_button);
+        mUrlInputEditText = (EditText) findViewById(R.id.url_input_edittext);
+        mStartDownloadButton = (Button) findViewById(R.id.start_download_button);
+        mShowDownloadListButton = (Button) findViewById(R.id.show_download_list_button);
 
-	mStartDownloadButton.setOnClickListener(this);
-	mShowDownloadListButton.setOnClickListener(this);
+        mStartDownloadButton.setOnClickListener(this);
+        mShowDownloadListButton.setOnClickListener(this);
 
-	mUrlInputEditText.setText("http://down.mumayi.com/41052/mbaidu");
+        mUrlInputEditText.setText("http://down.mumayi.com/41052/mbaidu");
     }
 
     private void startDownloadService() {
-	Intent intent = new Intent();
-	intent.setClass(this, DownloadService.class);
-	startService(intent);
+        Intent intent = new Intent();
+        intent.setClass(this, DownloadService.class);
+        startService(intent);
     }
 
     @Override
     public void onClick(View v) {
-	int id = v.getId();
-	switch (id) {
-	case R.id.start_download_button:
-	    startDownload();
-	    break;
-	case R.id.show_download_list_button:
-	    showDownloadList();
-	    break;
-	default:
-	    break;
-	}
+        int id = v.getId();
+        switch (id) {
+            case R.id.start_download_button:
+                startDownload();
+                break;
+            case R.id.show_download_list_button:
+                showDownloadList();
+                break;
+            default:
+                break;
+        }
     }
 
     private void showDownloadList() {
-	Intent intent = new Intent();
-	intent.setClass(this, DownloadList.class);
-	startActivity(intent);
+        Intent intent = new Intent();
+        intent.setClass(this, DownloadList.class);
+        startActivity(intent);
     }
 
     private void startDownload() {
-	String url = mUrlInputEditText.getText().toString();
-	Uri srcUri = Uri.parse(url);
-	DownloadManager.Request request = new Request(srcUri);
-	request.setDestinationInExternalPublicDir(
-		Environment.DIRECTORY_DOWNLOADS, "/");
-	request.setDescription("Just for test");
-	mDownloadManager.enqueue(request);
+        String url = mUrlInputEditText.getText().toString();
+        Uri srcUri = Uri.parse(url);
+        DownloadManager.Request request = new Request(srcUri);
+        request.setDestinationInExternalPublicDir(
+                Environment.DIRECTORY_DOWNLOADS, "/");
+        request.setDescription("Just for test");
+        mDownloadManager.enqueue(request);
     }
 }
