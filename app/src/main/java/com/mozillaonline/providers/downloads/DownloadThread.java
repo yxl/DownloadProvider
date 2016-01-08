@@ -37,6 +37,11 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Locale;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
 /**
  * Runs an actual download
  */
@@ -114,11 +119,41 @@ public class DownloadThread extends Thread {
             }
             URL url = new URL(state.mRequestUri);
 
+            if (url.toURI().getScheme().equals("https")) {
+                // Create a new trust manager that trust all certificates
+                TrustManager[] trustAllCerts = new TrustManager[]{
+                        new X509TrustManager() {
+                            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                                return null;
+                            }
+
+                            public void checkClientTrusted(
+                                    java.security.cert.X509Certificate[] certs, String authType) {
+                            }
+
+                            public void checkServerTrusted(
+                                    java.security.cert.X509Certificate[] certs, String authType) {
+                            }
+                        }
+                };
+                // Activate the new trust manager
+                try {
+                    SSLContext sc = SSLContext.getInstance("SSL");
+                    sc.init(null, trustAllCerts, new java.security.SecureRandom());
+                    HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             boolean finished = false;
             while (!finished) {
                 Log.i(Constants.TAG, "Initiating request for download "
                         + mInfo.mId);
-                connection = (HttpURLConnection) url.openConnection();
+                if (url.toURI().getScheme().equals("https")) {
+                    connection = (HttpsURLConnection) url.openConnection();
+                }else {
+                    connection = (HttpURLConnection) url.openConnection();
+                }
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("User-Agent", userAgent());
                 try {
