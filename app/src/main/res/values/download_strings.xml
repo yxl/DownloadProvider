@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2007 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2007 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -107,7 +106,7 @@
         downloads beyond the first two, i.e. "[title], [title] and [n] more".
         This is the " and [n] more" part, including the leading space, and it's
         used regardless of the number of additional downloads. -->
-    <string name="notification_filename_extras">" and <xliff:g id="number" example="27">%d</xliff:g> more"</string>
+    <string name="notification_filename_extras">" and <xliff:g example="27" id="number">%d</xliff:g> more"</string>
 
     <!-- When a download completes, a notification is displayed, and this
         string is used to indicate that the download successfully completed.
@@ -143,8 +142,8 @@
         download to start next time Wi-Fi is available or cancel the download altogether. [CHAR
         LIMIT=200] -->
     <string name="wifi_required_body">You must use WiFi to complete this
-        <xliff:g id="size" example="12.3KB">%s
-        </xliff:g> download. \n\nClick <xliff:g id="queue_text" example="Queue">%s
+        <xliff:g example="12.3KB" id="size">%s
+        </xliff:g> download. \n\nClick <xliff:g example="Queue" id="queue_text">%s
         </xliff:g> to begin this download the next time you are connected to a WiFi
         network.</string>
 
@@ -158,11 +157,11 @@
         downloads over the mobile network, and the user may choose to start the download over mobile
         anyway or to queue for download to start next time a Wi-Fi connection is available [CHAR
         LIMIT=200] -->
-    <string name="wifi_recommended_body">Starting this <xliff:g id="size" example="12.3KB">%s
+    <string name="wifi_recommended_body">Starting this <xliff:g example="12.3KB" id="size">%s
         </xliff:g> download now may shorten your battery life and/or result in
         excessive usage of your mobile data connection, which can lead to charges by
         your mobile operator depending on your data plan.\n\n
-        Click <xliff:g id="queue_text" example="Queue">%s</xliff:g> below to begin this download
+        Click <xliff:g example="Queue" id="queue_text">%s</xliff:g> below to begin this download
         the next time you are connected to a WiFi network.</string>
 
 

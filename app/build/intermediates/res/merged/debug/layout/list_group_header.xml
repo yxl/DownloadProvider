@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2010 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2010 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,11 +14,11 @@
 -->
 
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?android:attr/listPreferredItemHeight"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:paddingLeft="43dip"
-        android:layout_gravity="center_vertical"
-        android:gravity="center_vertical"/>
-<!-- From: file:/Users/leridge/DownloadProvider/app/src/main/res/layout/list_group_header.xml -->
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:gravity="center_vertical"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:paddingLeft="43dip"
+    android:textAppearance="?android:attr/textAppearanceMedium" />
+<!-- From: file:/Users/blinko/Documents/workspace/DownloadProvider/app/src/main/res/layout/list_group_header.xml -->

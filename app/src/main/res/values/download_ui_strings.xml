@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
      Copyright (C) 2010 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +13,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources>
 
     <!-- The title that appears at the top of the activity listing downloads [CHAR LIMIT=25] -->
     <string name="download_title">Downloads</string>
@@ -62,7 +61,7 @@
          Status indicating that the system pauses downloading the file.  Appears for an
          individual item in the download list.  [CHAR LIMIT=11]
     -->
-    <string name="download_paused">Paused</string>    
+    <string name="download_paused">Paused</string>
     <!--
          Status indicating that the download has completed successfully. Appears for an individual
          item in the download list.  [CHAR LIMIT=11]

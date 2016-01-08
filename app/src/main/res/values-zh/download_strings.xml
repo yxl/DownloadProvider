@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--  Copyright (C) 2007 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?><!--  Copyright (C) 2007 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,8 +13,7 @@
      limitations under the License.
  -->
 
-<resources xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="permlab_downloadManager" msgid="7779544811202855500">"访问下载管理器。"</string>
     <string name="permdesc_downloadManager" msgid="4240298564918160337">"允许应用程序访问下载管理器以及用它下载文件。恶意应用程序可借此干扰下载，以及访问隐私信息。"</string>
     <string name="permlab_downloadManagerAdvanced" msgid="7103642833308809655">"高级下载管理器功能。"</string>

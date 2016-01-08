@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 ** Copyright 2008, The Android Open Source Project
 **
@@ -21,12 +20,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@android:drawable/status_bar_item_app_background"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="40dp"
@@ -34,7 +33,7 @@
             android:clickable="true"
             android:focusable="true"
             android:orientation="vertical"
-            android:paddingTop="8dp" >
+            android:paddingTop="8dp">
 
             <ImageView
                 android:id="@+id/appIcon"
@@ -56,7 +55,7 @@
             android:layout_height="fill_parent"
             android:clickable="true"
             android:focusable="true"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -65,7 +64,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:orientation="horizontal"
-                android:paddingTop="10dp" >
+                android:paddingTop="10dp">
 
                 <TextView
                     android:id="@+id/title"

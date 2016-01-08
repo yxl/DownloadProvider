@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 ** Copyright 2010, The Android Open Source Project
 **
@@ -17,50 +16,61 @@
 */
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:orientation="vertical">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
     <!-- The main area showing the list of downloads -->
-    <FrameLayout android:layout_width="fill_parent"
-                 android:layout_height="fill_parent"
-                 android:layout_weight="1">
-        <ExpandableListView android:id="@+id/date_ordered_list"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"/>
-        <ListView android:id="@+id/size_ordered_list"
-                  android:layout_width="fill_parent"
-                  android:layout_height="fill_parent"/>
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
+
+        <ExpandableListView
+            android:id="@+id/date_ordered_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+        <ListView
+            android:id="@+id/size_ordered_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:id="@+id/empty"
-                  android:layout_width="fill_parent"
-                  android:layout_height="fill_parent"
-                  android:text="@string/no_downloads"
-                  android:gravity="center"
-                  android:textStyle="bold"/>
+            android:id="@+id/empty"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:text="@string/no_downloads"
+            android:textStyle="bold" />
     </FrameLayout>
 
     <!-- The selection menu that pops up from the bottom of the screen -->
-    <LinearLayout android:id="@+id/selection_menu"
-                  android:orientation="horizontal"
-                  android:visibility="gone"
-                  android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:paddingTop="5dip"
-                  android:paddingLeft="4dip"
-                  android:paddingRight="4dip"
-                  android:paddingBottom="1dip"
-                  android:gravity="center"
-                  android:layout_gravity="center"
-                  android:background="@android:drawable/bottom_bar">
-          <Button android:id="@+id/selection_delete"
-                  android:layout_width="fill_parent"
-                  android:layout_height="fill_parent"
-                  android:layout_weight="1"/>
-          <Button android:id="@+id/deselect_all"
-                  android:layout_width="fill_parent"
-                  android:layout_height="fill_parent"
-                  android:layout_weight="1"
-                  android:text="@string/deselect_all"/>
+    <LinearLayout
+        android:id="@+id/selection_menu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@android:drawable/bottom_bar"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="1dip"
+        android:paddingLeft="4dip"
+        android:paddingRight="4dip"
+        android:paddingTop="5dip"
+        android:visibility="gone">
 
-      </LinearLayout>
+        <Button
+            android:id="@+id/selection_delete"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/deselect_all"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:text="@string/deselect_all" />
+
+    </LinearLayout>
 </LinearLayout>

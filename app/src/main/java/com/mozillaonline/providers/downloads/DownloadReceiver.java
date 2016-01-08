@@ -16,10 +16,6 @@
 
 package com.mozillaonline.providers.downloads;
 
-import java.io.File;
-
-import com.mozillaonline.providers.DownloadManager;
-
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ContentUris;
@@ -31,6 +27,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Log;
+
+import com.mozillaonline.providers.DownloadManager;
+
+import java.io.File;
 
 /**
  * Receives system broadcasts (boot, network connectivity)
@@ -44,20 +44,25 @@ public class DownloadReceiver extends BroadcastReceiver {
         }
 
         String action = intent.getAction();
-        if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
-            startService(context);
-        } else if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-            NetworkInfo info = (NetworkInfo)
-                    intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
-            if (info != null && info.isConnected()) {
+        switch (action) {
+            case Intent.ACTION_BOOT_COMPLETED:
                 startService(context);
-            }
-        } else if (action.equals(Constants.ACTION_RETRY)) {
-            startService(context);
-        } else if (action.equals(Constants.ACTION_OPEN)
-                || action.equals(Constants.ACTION_LIST)
-                || action.equals(Constants.ACTION_HIDE)) {
-            handleNotificationBroadcast(context, intent);
+                break;
+            case ConnectivityManager.CONNECTIVITY_ACTION:
+                NetworkInfo info = (NetworkInfo)
+                        intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
+                if (info != null && info.isConnected()) {
+                    startService(context);
+                }
+                break;
+            case Constants.ACTION_RETRY:
+                startService(context);
+                break;
+            case Constants.ACTION_OPEN:
+            case Constants.ACTION_LIST:
+            case Constants.ACTION_HIDE:
+                handleNotificationBroadcast(context, intent);
+                break;
         }
     }
 
@@ -68,12 +73,16 @@ public class DownloadReceiver extends BroadcastReceiver {
         Uri uri = intent.getData();
         String action = intent.getAction();
         if (Constants.LOGVV) {
-            if (action.equals(Constants.ACTION_OPEN)) {
-                Log.v(Constants.TAG, "Receiver open for " + uri);
-            } else if (action.equals(Constants.ACTION_LIST)) {
-                Log.v(Constants.TAG, "Receiver list for " + uri);
-            } else { // ACTION_HIDE
-                Log.v(Constants.TAG, "Receiver hide for " + uri);
+            switch (action) {
+                case Constants.ACTION_OPEN:
+                    Log.v(Constants.TAG, "Receiver open for " + uri);
+                    break;
+                case Constants.ACTION_LIST:
+                    Log.v(Constants.TAG, "Receiver list for " + uri);
+                    break;
+                default:  // ACTION_HIDE
+                    Log.v(Constants.TAG, "Receiver hide for " + uri);
+                    break;
             }
         }
 
@@ -86,13 +95,17 @@ public class DownloadReceiver extends BroadcastReceiver {
                 return;
             }
 
-            if (action.equals(Constants.ACTION_OPEN)) {
-                openDownload(context, cursor);
-                hideNotification(context, uri, cursor);
-            } else if (action.equals(Constants.ACTION_LIST)) {
-                sendNotificationClickedIntent(intent, cursor);
-            } else { // ACTION_HIDE
-                hideNotification(context, uri, cursor);
+            switch (action) {
+                case Constants.ACTION_OPEN:
+                    openDownload(context, cursor);
+                    hideNotification(context, uri, cursor);
+                    break;
+                case Constants.ACTION_LIST:
+                    sendNotificationClickedIntent(intent, cursor);
+                    break;
+                default:  // ACTION_HIDE
+                    hideNotification(context, uri, cursor);
+                    break;
             }
         } finally {
             cursor.close();
@@ -101,7 +114,8 @@ public class DownloadReceiver extends BroadcastReceiver {
 
     /**
      * Hide a system notification for a download.
-     * @param uri URI to update the download
+     *
+     * @param uri    URI to update the download
      * @param cursor Cursor for reading the download's fields
      */
     private void hideNotification(Context context, Uri uri, Cursor cursor) {
@@ -128,7 +142,7 @@ public class DownloadReceiver extends BroadcastReceiver {
     private void openDownload(Context context, Cursor cursor) {
         String filename = cursor.getString(cursor.getColumnIndexOrThrow(Downloads._DATA));
         String mimetype =
-            cursor.getString(cursor.getColumnIndexOrThrow(Downloads.COLUMN_MIME_TYPE));
+                cursor.getString(cursor.getColumnIndexOrThrow(Downloads.COLUMN_MIME_TYPE));
         Uri path = Uri.parse(filename);
         // If there is no scheme, then it must be a file
         if (path.getScheme() == null) {
@@ -147,6 +161,7 @@ public class DownloadReceiver extends BroadcastReceiver {
 
     /**
      * Notify the owner of a running download that its notification was clicked.
+     *
      * @param intent the broadcast intent sent by the notification manager
      * @param cursor Cursor for reading the download's fields
      */
